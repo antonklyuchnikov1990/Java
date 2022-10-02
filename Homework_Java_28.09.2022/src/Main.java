@@ -1,4 +1,7 @@
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public class Main {
@@ -60,6 +63,19 @@ public class Main {
 //Explanation: The answer is "wke", with the length of 3.
 //Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 
-        
+
+// Мозг отказывается понимать логику, ведь вторая 'w' под индексом 2 это уже повторение. Или ошибка или я ...
+        System.out.println("Task second level:");
+        String str = "pwwkew";
+        for (int i = 0; i < str.length(); i++) {
+            if (str.charAt(i) == str.charAt(i + 1)) {
+                System.out.println(str.substring(0, i + 1));
+                break;
+            }
+        }
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        for (int i = 0; i < str.length(); i++) {
+            map.put(str.charAt(i), map.getOrDefault(str.charAt(i), 0) + 1);
+        }
     }
 }
