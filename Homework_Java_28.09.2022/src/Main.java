@@ -1,7 +1,4 @@
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class Main {
@@ -77,5 +74,27 @@ public class Main {
         for (int i = 0; i < str.length(); i++) {
             map.put(str.charAt(i), map.getOrDefault(str.charAt(i), 0) + 1);
         }
+
+        System.out.println(maxSubstringLength("abcabcbb"));
+        System.out.println(maxSubstringLength("bbbbb"));
+        System.out.println(maxSubstringLength("pwwkew"));
+    }
+
+    // Solution from Loshmanov:
+    private static int maxSubstringLength(String s) {
+        Set<Character> usedSymbols = new HashSet<>();
+        int i = 0, j = 0, len = s.length(), answer = 0;
+        while (i < len && j < len) {
+            char c = s.charAt(j);
+            if (!usedSymbols.contains(c)) {
+                usedSymbols.add(c);
+                j++;
+                answer = Math.max(answer, j - i);
+            } else {
+                usedSymbols.remove(s.charAt(i));
+                i++;
+            }
+        }
+        return answer;
     }
 }
