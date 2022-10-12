@@ -31,7 +31,7 @@ public class Main {
 // то пусть возвращается 0.
         System.out.println();
         System.out.println("Task 1.3b:");
-        Optional<String> firstElement = Optional.of(list2.stream().findFirst().orElse("0"));
+        Optional<String> firstElement = list2.stream().findFirst();
         System.out.println(firstElement);
 
         //Дана коллекция Arrays.asList("f10", "f15", "f2", "f4", "f4"). Нужно выполнить сортировку
