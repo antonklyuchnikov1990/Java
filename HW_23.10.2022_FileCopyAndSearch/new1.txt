@@ -1,0 +1,15 @@
+Every day more and more IOS developers tend to start their new projects using SwiftUI.
+And here they face problems in the form of the implementation of established ideas about navigation in iOS.
+The proposed solutions from Apple often work quite crookedly. This is understood in Apple itself.
+As SwiftUI evolved, the main navigation component NavigationView was replaced with NavigationStack.
+And it's not just a name change.
+Those who have already used NavigationView are not ready to abandon it, since its implementation lay through pain and tears.
+Those who are just entering the world of SUI either come across recommendations to create custom navigation, or look at articles on how to resolve NavigationView problems.
+Not everyone liked the new alternative, as WWDC did not show it from the best side. And she is.
+And this is good news! Apple has finally mastered the Navigator pattern that competitors have been using for over 10 years!
+
+The bottom line: navigation is now possible even by passing a navigation path. Those who used DeepLink or UniversalLink will rejoice.
+Now there will be a holiday on their street. I will make a reservation - this does not mean that it was impossible before, but now it is not necessary to arrange dances with a tambourine for this.
+
+To demonstrate the idea, a minimal design was sketched out, including five screens, with simple names: first, second, third and fourh.
+These screens were connected by the following transition scheme:
