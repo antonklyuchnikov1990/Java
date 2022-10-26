@@ -1,46 +1,44 @@
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.BufferedInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 
 public class Main {
 
     public static void main(String[] args) {
-        byte[] array = {1, 2, 3, 4, 5, 4, 5, 9};
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-            baos.write(array);
+        // Writer
+        try (FileWriter writer = new FileWriter("D:\\IT\\GitHub\\Java\\article.txt")) {
+            String text = "Hello, Java!";
+            writer.write(text);
+            // Запись по символам
+            writer.append("!");
+            writer.flush();
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try (FileOutputStream fos = new FileOutputStream("D:\\IT\\Test_26.10.2022")) {
-            baos.writeTo(fos);
-        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Выполнение задания
-        try (FileInputStream fis = new FileInputStream("D:\\IT\\Test_26.10.2022")) {
-            byte[] buffer = new byte[fis.available()];
-            fis.read(buffer);
-            Map<Byte, Integer> map = new HashMap<>();
-            for (int i = 0; i < buffer.length; i++) {
-                if (map.containsKey(buffer[i])) {
-                    map.put(buffer[i], map.get(buffer[i]) + 1);
-                } else {
-                    map.put(buffer[i], 1);
-                }
+//        Reader
+        try (FileReader reader = new FileReader("D:\\IT\\GitHub\\Java\\article.txt")) {
+            int c;
+            while ((c = reader.read()) != -1) {
+                System.out.print((char) c);
             }
-            int maxValue = map.values().stream()
-                    .max(Integer::compareTo).orElse(0);
-            for (Map.Entry<Byte, Integer> entry : map.entrySet()) {
-                if (entry.getValue() == maxValue) {
-                    System.out.print(entry.getKey() + " ");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Чтение через буффер
+        try (FileReader reader = new FileReader("D:\\IT\\GitHub\\Java\\article.txt")) {
+            char[] buf = new char[256];
+            int c;
+            while ((c = reader.read(buf)) > 0) {
+                if (c < 256) {
+                    buf = Arrays.copyOf(buf, c);
                 }
+                System.out.println(buf);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
