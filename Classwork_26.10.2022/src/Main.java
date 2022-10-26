@@ -1,42 +1,37 @@
-import java.io.BufferedInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        // Writer
-        try (FileWriter writer = new FileWriter("D:\\IT\\GitHub\\Java\\article.txt")) {
-            String text = "Hello, Java!";
-            writer.write(text);
-            // Запись по символам
-            writer.append("!");
-            writer.flush();
+        // BufferWriter
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\IT\\GitHub\\Java\\article.txt"))) {
+            String text = "Hello, Java!\nExample of text";
+            bw.write(text);
+            bw.write("\nAddition\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        Reader
-        try (FileReader reader = new FileReader("D:\\IT\\GitHub\\Java\\article.txt")) {
+        // BufferReader
+        try (BufferedReader br = new BufferedReader(new FileReader("D:\\IT\\GitHub\\Java\\article.txt"))) {
             int c;
-            while ((c = reader.read()) != -1) {
+            while ((c = br.read()) != -1) {
                 System.out.print((char) c);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // Чтение через буффер
-        try (FileReader reader = new FileReader("D:\\IT\\GitHub\\Java\\article.txt")) {
-            char[] buf = new char[256];
-            int c;
-            while ((c = reader.read(buf)) > 0) {
-                if (c < 256) {
-                    buf = Arrays.copyOf(buf, c);
-                }
-                System.out.println(buf);
+        try (BufferedReader br = new BufferedReader(new FileReader("D:\\IT\\GitHub\\Java\\article.txt"))) {
+            while (br.ready()) {
+                int c = br.read();
+                System.out.print((char) c);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader("D:\\IT\\GitHub\\Java\\article.txt"))) {
+            String s;
+            while ((s = br.readLine()) != null) {
+                System.out.println(s);
             }
         } catch (IOException e) {
             e.printStackTrace();
