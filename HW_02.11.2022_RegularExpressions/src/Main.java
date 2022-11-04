@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,5 +23,25 @@ public class Main {
 //– пример неправильных выражений: C00l.
 
         System.out.println("COOL".matches("\\w{7}+\\w+"));
+
+//        Проверить на обязательное наличие буквы из нижнего регистра, из верхнего регистра
+//        а также специального символа
+
+
+//        Scanner sc = new Scanner(System.in);
+//        String example = sc.next();
+//        System.out.println(validation(example));
+//        String regEx = "\\w{8,}(?=.*\\W)(?=.*[a-z])(?=.*[A-Z])";
+//        System.out.println("GoodVibes?".matches(regEx));
+        String regEx = "(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)\\w{8,}";
+        System.out.println("GoodVibes6".matches(regEx));
+
     }
+
+//    private static boolean validation(String example) {
+//        String regEx = "\\w{8,}";
+//        return example.contains("a-zA-Z");
+//    }
+//     example.contains("a-zA-Z\\W") &&
+//    example.matches(regEx)
 }
