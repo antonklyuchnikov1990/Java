@@ -1,3 +1,5 @@
+package HM;
+
 import java.util.Scanner;
 
 public class Main {
