@@ -2,14 +2,16 @@ package task4;
 
 public class Main {
 
+    public static final int SIZE = 10000;
+
     public static void main(String[] args) {
         serial();
-        parallel();
+        parallel(30);
     }
 
     private static void serial() {
         long start = System.currentTimeMillis();
-        double[][] table = new double[10000][10000];
+        double[][] table = new double[SIZE][SIZE];
         for (int i = 0; i < table.length; i++) {
             for (int j = 0; j < table[i].length; j++) {
                 table[i][j] = Math.pow(i, j);
@@ -18,53 +20,38 @@ public class Main {
         System.out.println((System.currentTimeMillis() - start) + " ms");
     }
 
-    private static void parallel() {
+    private static void parallel(int n) {
         long start = System.currentTimeMillis();
-        double[][] table = new double[10000][10000];
-        Runnable task1 = () -> {
-            for (int i = 0; i < table.length; i++) {
-                for (int j = 0; j < table[i].length / 2; j++) {
-                    table[i][j] = Math.pow(i, j);
+        double[][] table = new double[SIZE][SIZE];
+
+        Thread[] threads = new Thread[n];
+        int d = SIZE / n;
+        for (int k = 0; k < n; k++) {
+            int finalK = k;
+            Runnable task = () -> {
+                for (int i = 0; i < table.length; i++) {
+                    int left = d * finalK;
+                    int right = d * (finalK + 1) - 1;
+                    if (finalK == n - 1) {
+                        right = SIZE - 1;
+                    }
+                    for (int j = left; j < right; j++) {
+                        table[i][j] = Math.pow(i, j);
+                    }
                 }
-            }
-        };
-
-        Thread thread1 = new Thread(task1);
-        thread1.start();
-
-        Runnable task2 = () -> {
-            for (int i = 0; i < table.length; i++) {
-                for (int j = table[i].length / 2; j < table[i].length; j++) {
-                    table[i][j] = Math.pow(i, j);
-                }
-            }
-        };
-
-        Thread thread2 = new Thread(task2);
-        thread2.start();
-
-//        while (thread1.isAlive() || thread2.isAlive()) {
-//        }
-        System.out.println("Thread1 is Alive" + thread1.isAlive());
-        System.out.println("Thread2 is Alive" + thread2.isAlive());
+            };
+            threads[k] = new Thread(task);
+            threads[k].start();
+        }
 
         try {
-            thread1.join();
-            thread2.join();
+            for (int i = 0; i < n; i++) {
+                threads[i].join();
+            }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
         System.out.println((System.currentTimeMillis() - start) + " ms");
-        System.out.println("Thread1 is Alive" + thread1.isAlive());
-        System.out.println("Thread2 is Alive" + thread2.isAlive());
-    }
-
-    private static void printArray(int[][] table) {
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[i].length; j++) {
-                System.out.println(table[i][j] + " ");
-            }
-        }
     }
 }
