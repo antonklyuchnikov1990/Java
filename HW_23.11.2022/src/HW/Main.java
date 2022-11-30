@@ -1,9 +1,11 @@
+package HW;
+
 public class Main {
 
     public static final int CONS = 100;
 
     public static void main(String[] args) {
-//        First level: Написать класс Counter, в котором есть одно целочисленное поле count
+//        First level: Написать класс HW.Counter, в котором есть одно целочисленное поле count
 //        (инициализировано нулем). В классе реализовать два метода add и sub.
 //        Первый метод увеличивает значение count на 1, второй - уменьшает на 1.
 //        Запустить два потока: в первом в цикле (можно 100 раз) вызвать метод add,

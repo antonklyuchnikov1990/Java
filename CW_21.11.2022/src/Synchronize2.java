@@ -10,14 +10,34 @@ public class Synchronize2 {
 class Queue {
     private int n;
 
-    int get() {
+    private boolean valueSet = false;
+
+    public synchronized int get() {
+        while (!valueSet) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         System.out.println("Get: " + n);
+        valueSet = false;
+        notify();
         return n;
     }
 
-    public void put(int n) {
+    public synchronized void put(int n) {
+        while (valueSet) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         this.n = n;
+        valueSet = true;
         System.out.println("Put: " + n);
+        notify();
     }
 }
 
@@ -27,7 +47,7 @@ class Producer implements Runnable {
 
     public Producer(Queue q) {
         this.q = q;
-        new Thread(this, "Supplier").start();
+        new Thread(this, "Producer").start();
     }
     @Override
     public void run() {
