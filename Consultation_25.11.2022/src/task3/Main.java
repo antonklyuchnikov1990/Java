@@ -4,7 +4,8 @@ import javax.swing.text.DefaultStyledDocument;
 
 public class Main {
 
-    private boolean flag = true;
+    private volatile boolean flag = true;
+    private int count = 30;
 
     public static void main(String[] args) throws InterruptedException {
 //        // Напишите код, в котором создаются и запускаются на выполнение
@@ -25,37 +26,30 @@ public class Main {
         System.out.println("The end");
     }
 
-    private synchronized void changeFlag() {
-        try {
-            if (!flag) {
+    private void changeFlag() {
+        while (count > 0) {
+            flag = !flag;
+            System.out.println(flag);
+            try {
                 Thread.sleep(1000);
-                flag = true;
-                notify();
-            } else {
-                Thread.sleep(1000);
-                flag = false;
-                notify();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
+    private void print() {
+        for (int i = 30; i >= 0; i--) {
+            while (!flag) {
 
-    private synchronized void print() {
-        try {
-            for (int i = 30; i >= 0; i--) {
-                while (flag) {
-                    wait();
-                }
-                System.out.println(i);
-                Thread.sleep(100);
-                notify();
-                flag = !flag;
             }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(i);
+            count = i;
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
