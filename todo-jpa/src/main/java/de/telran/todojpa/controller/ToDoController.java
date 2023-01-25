@@ -29,8 +29,8 @@ public class ToDoController {
     }
 
     @GetMapping("/todo/{id}")
-    public ResponseEntity<ToDo> getToDoById(@PathVariable Long id) {
-        Optional<ToDo> toDo = repository.findById(id);
+    public ResponseEntity<ToDo> getToDoById(@PathVariable String id) {
+        Optional<ToDo> toDo = repository.findById(Long.valueOf(id));
         if (toDo.isPresent()) {
             return ResponseEntity.ok(toDo.get());
         } else {
@@ -39,8 +39,8 @@ public class ToDoController {
     }
 
     @GetMapping("/todo")
-    public ResponseEntity<ToDo> getToDoById2(@RequestParam Long id) {
-        Optional<ToDo> toDo = repository.findById(id);
+    public ResponseEntity<ToDo> getToDoById2(@RequestParam String id) {
+        Optional<ToDo> toDo = repository.findById(Long.valueOf(id));
         if (toDo.isPresent()) {
             return ResponseEntity.ok(toDo.get());
         } else {
@@ -59,8 +59,8 @@ public class ToDoController {
     }
 
     @DeleteMapping("/todo/{id}")
-    public ResponseEntity<?> deleteToDo(@PathVariable Long id) {
-        Optional<ToDo> optionalToDo = repository.findById(id);
+    public ResponseEntity<?> deleteToDo(@PathVariable String id) {
+        Optional<ToDo> optionalToDo = repository.findById(Long.valueOf(id));
         if (optionalToDo.isEmpty()) {
             // ToDo с таким id нет в базе данных
             return ResponseEntity.notFound().build();
@@ -71,7 +71,7 @@ public class ToDoController {
 
     @DeleteMapping("/todo")
     public ResponseEntity<?> deleteToDo(@RequestBody ToDo toDo) {
-        Optional<ToDo> optionalToDo = repository.findById(toDo.getId());
+        Optional<ToDo> optionalToDo = repository.findById(Long.valueOf(toDo.getId()));
         if (optionalToDo.isEmpty()) {
             // ToDo с таким id нет в базе данных
             return ResponseEntity.notFound().build();

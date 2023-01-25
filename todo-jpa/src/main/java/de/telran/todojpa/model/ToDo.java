@@ -1,6 +1,5 @@
 package de.telran.todojpa.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +19,7 @@ public class ToDo {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @NotNull
-    private Long id;
+    private String id;
 
     @NotNull
     @NotBlank

@@ -22,7 +22,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     public ResponseEntity<?> getAllCategories() {
-        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(repository.findByOrderByName(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/category", method = {RequestMethod.POST, RequestMethod.PUT})

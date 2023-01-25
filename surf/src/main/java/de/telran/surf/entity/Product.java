@@ -32,8 +32,11 @@ public class Product {
 
 
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id")
+
+//optional = false - значит, что связь обязательная
+    @ManyToOne(optional = false)
     private Category category;
 
 }
